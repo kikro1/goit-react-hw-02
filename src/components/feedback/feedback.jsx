@@ -1,16 +1,14 @@
-
-// import Options from "../Options/Options";
-const Feedback = () => {
+const Feedback = ({ values, total, positive }) => {
 
 
     return (
-         <div>
-            <p>Good:</p>
-            <p>neutral: neutral</p>
-            <p>Bad: Bad</p>
-            <p>Total: Total</p>
-            <p>Positive: Positive</p>
-        </div>
+        <div>
+        <p>Good: {values.good}</p>
+        <p>Neutral: {values.neutral}</p>
+        <p>Bad: {values.bad}</p>
+        <p>Total: {total}</p>
+        <p>Positive: {positive}%</p>
+      </div>
     );
 }
 

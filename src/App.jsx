@@ -1,5 +1,9 @@
 import { useEffect, useState } from 'react'
+
 import Description from './components/Description/Description';
+import Options from './components/Options/Options';
+import Feedback from './components/Feedback/Feedback';
+
 import './App.css'
 
 function App() {
@@ -43,23 +47,19 @@ function App() {
   return (
 
     <div>
-      <Description />
+        <Description />
 
-      <button onClick={() => updateValues('good')}>Good</button>
-      <button onClick={() => updateValues('neutral')}>Neutral</button>
-      <button onClick={() => updateValues('bad')}>Bad</button>
-      <button onClick={resetValues}> Reset</button>
+      <div className='wrapper'>
+        <Options onUpdate={() => updateValues('good')}> Good</Options>
+        <Options onUpdate={() => updateValues('neutral')}> Neutral</Options>
+        <Options onUpdate={() => updateValues('bad')}> Bad</Options>
+        <Options onUpdate={resetValues}>Reset</Options>
+      </div>
 
-      <div>
-            <p>Good: {values.good}</p>
-            <p>neutral: {values.neutral}</p>
-            <p>Bad: {values.bad}</p>
-            <p>Total: {total()}</p>
-            <p>Positive: {positive()}%</p>
-        </div>
+      <Feedback values={values} total={total()} positive={positive()} />
     </div>
   );
-}
+};
 
 export default App;
 
