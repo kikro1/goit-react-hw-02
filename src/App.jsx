@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react';
 
 import Description from './components/Description/Description';
 import Options from './components/Options/Options';
-import Feedback from './components/AllFeedback/AllFeedback';
+import Feedback from './components/Feedback/Feedback';
+import Notification from './components/Notification/Notification';
 
 import './App.css';
 
@@ -35,14 +36,16 @@ function App() {
       neutral: 0,
       bad: 0
     });
-  }
-  const total = () => {
+  };
+  const totalFeedback = () => {
     return values.good + values.neutral + values.bad;
-  }
-  const positive = () => {
-    const totalCount = total();
-    return totalCount === 0 ? 0 : Math.round((values.good / totalCount) * 100);
-  }
+  };
+  const positiveFeedbackPercentage = () => {
+    const total = totalFeedback();
+    return total === 0 ? 0 : Math.round((values.good / total) * 100);
+  };
+
+  const hasFeedback = totalFeedback() > 0;
 
   return (
 
@@ -50,13 +53,22 @@ function App() {
         <Description />
 
       <div className='wrapper'>
-        <Options onUpdate={() => updateValues('good')}> Good</Options>
-        <Options onUpdate={() => updateValues('neutral')}> Neutral</Options>
-        <Options onUpdate={() => updateValues('bad')}> Bad</Options>
-        <Options onUpdate={resetValues}>Reset</Options>
+        <Options
+        onFeebback={updateValues}
+        onReset={resetValues}
+        hasFeedback={hasFeedback}
+        />
+        {hasFeedback ? (
+          <Feedback values={values}
+          total={totalFeedback()}
+          positive={positiveFeedbackPercentage()}
+          />
+        ) : (
+          <Notification
+          message="There is no feedback"/>
+        )}
       </div>
 
-      <Feedback values={values} total={total()} positive={positive()} />
     </div>
   );
 };
